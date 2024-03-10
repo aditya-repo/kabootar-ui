@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        * {
+            margin: 0;
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            color: #313131;
+        }
+
+        .dashboard-container {
+            display: flex;
+        }
+
+        .sidebar {
+            width: 256px;
+            height: 100%;
+            /* transition: width 0.1s ease; */
+            background-color: #ececec;
+            color: #fff;
+            box-sizing: border-box;
+            position: relative;
+            height: 100%;
+        }
+
+        .sidebar .header {
+            padding: 12px 16px;
+            border-bottom: 1px solid #fff;
+
+            h1 {
+                font-weight: lighter;
+                color: #313131;
+            }
+        }
+
+        #toggle-sidebar-btn {
+            cursor: pointer;
+            background-color: #555;
+            color: #fff;
+            border: none;
+            padding: 8px;
+            border-radius: 50%;
+            height: 40px;
+            width: 40px;
+            font-size: 18px;
+        }
+
+        .sidebar.collapsed {
+            width: 78px;
+        }
+
+        .sidebar.collapsed #toggle-sidebar-btn {
+            transform: rotate(180deg);
+        }
+
+        .sidebar-footer a img {
+            width: 22px;
+        }
+
+        /* .sidebar-content{
+            display: flex;
+            justify-content: flex-start;
+        } */
+
+
+        .sidebar-content {
+            color: #313131;
+            padding: 12px 16px;
+            display: flex;
+            justify-content: flex-start;
+            width: 100%;
+
+            ul {
+                list-style: none;
+
+                li {
+                    padding: 10px 18px;
+                    font-size: 20px;
+                    display: flex;
+                    justify-content: flex-start;
+
+                    a {
+                        text-decoration: none;
+                        color: #313131;
+                        display: flex;
+                        letter-spacing: 0.75px;
+
+                        img {
+                            width: 20px;
+                            padding-left: 0px;
+                        }
+                    }
+
+                    span {
+                        padding-left: 16px;
+                    }
+                }
+            }
+        }
+
+        .sidebar-content ul li:first-child {
+            background-color: #ffffff;
+            padding: 16px 18px;
+            border-radius: 36px;
+            font-size: 22px;
+            margin-bottom: 8px;
+
+            padding img {
+                width: 24px;
+            }
+
+            span {
+                padding-right: 20px;
+            }
+        }
+
+        .sidebar-footer {
+            border-top: 1px solid grey;
+            width: 100%;
+            position: absolute;
+            bottom: 0;
+            padding: 16px 34px;
+
+            a {
+                display: flex;
+                justify-content: flex-start;
+                align-items: center;
+                text-decoration: none;
+                font-size: 22px;
+                color: #313131;
+
+                img {
+                    width: 24px;
+                }
+            }
+
+            span {
+                padding-left: 16px;
+            }
+        }
+
+        .flex {
+            display: flex;
+            align-items: center;
+        }
+
+        .start {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+        }
+
+        .between {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .p-1 {
+            padding: 4px;
+        }
+
+        .p-2 {
+            padding: 8px;
+        }
+
+        .p-3 {
+            padding: 12px;
+        }
+
+        .p-4 {
+            padding: 16px;
+        }
+
+        .pl-6 {
+            padding-left: 6px;
+        }
+
+        .pl-16 {
+            padding-left: 16px;
+        }
+
+        .logo {
+            padding-left: 16px;
+            margin: 0;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        /* Track */
+        ::-webkit-scrollbar {
+            width: 4px;
+            /* width of the entire scrollbar */
+        }
+
+        /* Handle */
+        ::-webkit-scrollbar-thumb {
+            background-color: #888;
+            /* color of the scrollbar handle */
+            border-radius: 6px;
+            /* roundness of the scrollbar handle */
+        }
+
+        /* Handle on hover */
+        ::-webkit-scrollbar-thumb:hover {
+            background-color: #555;
+            /* color of the scrollbar handle on hover */
+        }
+
+        /* Track */
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            /* color of the scrollbar track */
+        }
+
+        /* Handle */
+        ::-webkit-scrollbar-track-piece {
+            background: #ddd;
+            /* color of the scrollbar handle track piece */
+        }
+
+        @media only screen and (max-width: 768px) {
+            .sidebar-content {
+                justify-content: center !important;
+
+                ul li {
+                    padding: 16px 20px 16px 18px !important;
+                    transition: 0.1s ease-in-out;
+                }
+            }
+
+            .sidebar-footer a {
+                justify-content: center !important;
+            }
+        }
+    </style>
+
+    <style>
+        .main-container {
+            margin: 8px;
+        }
+
+        .main-content {
+            width: 100%;
+
+            .top-header {
+                height: 64px;
+                background-color: #ececec;
+
+                h2,
+                .flex {
+                    padding: 0 22px;
+                }
+            }
+
+            .container {
+                border-radius: 12px;
+                background-color: #fff;
+
+                .header {
+                    border-radius: 24px;
+                    height: 36px;
+                    background-color: #ececec;
+
+                    h5 {
+                        letter-spacing: 0.75px;
+                        color: #888;
+                    }
+                }
+
+                .body {
+                    margin-top: 8px;
+                    padding: 12px;
+                    border-radius: 12px;
+                    background-color: #ececec;
+
+                    .mail-content {
+                        padding: 6px;
+                        overflow-y: scroll;
+                    }
+                }
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="dashboard-container">
+        <div class="sidebar" id="sidebar">
+            <div class="flex start header">
+                <div class="toggle-btn"><button id="toggle-sidebar-btn">☰</button></div>
+                <h1 class="logo">Kabootar</h1>
+            </div>
+            <!-- Sidebar content goes here -->
+            <div class="sidebar-content">
+                <ul>
+                    <li><a href="#"><img src="/img/file-invoice.svg" alt=""><span>Compose</span></a></li>
+                    <li><a href="#"><img src="/img/money-check-edit.svg" alt=""><span>Inbox</span></a></li>
+                    <li><a href="#"><img src="/img/arrow-up-right.svg" alt=""><span>Sent</span></a></li>
+                    <li><a href="#"><img src="/img/books.svg" alt=""><span>Archive</span></a></li>
+                    <li><a href="#"><img src="/img/file-circle-info.svg" alt=""><span>Draft</span></a></li>
+                    <li><a href="#"><img src="/img/comment-info.svg" alt=""><span>Spam</span></a></li>
+                    <li><a href="#"><img src="/img/trash-clock.svg" alt=""><span>Trashed</span></a></li>
+                </ul>
+            </div>
+            <div class="sidebar-footer">
+                <a href="#"><img src="/img/customize.svg" alt=""><span>Setting</span></a>
+            </div>
+            <!-- Include a button/icon for toggling -->
+        </div>
+        <div class="main-content" style="background-color: #ffffff;">
+            <!-- Main content goes here -->
+            <div class="top-header between">
+                <h2>Inbox</h2>
+                <div class="flex"><img src="/img/circle-user.svg" alt="" width="36px"></div>
+            </div>
+            <div class="main-container">
+
+                <div class="container">
+                    <div class="header between pl-6">
+                        <div class="start pl-16">
+
+                            <input type="checkbox" name="name" id="">
+                            <h5 class="pl-16">Most Recent</h5>
+                        </div>
+                        <h5 class="p-2">jno</h5>
+                    </div>
+                    <div class="body">
+                        <div class="mail-content">
+
+                            <div class="flex" style="border-bottom: 1px dashed grey;padding: 6px;">
+                                <input type="checkbox" name="name" id="">
+                                <img src="/img/user.svg" width="24px" alt=""
+                                    style="background-color: aquamarine;margin: 6px 10px;">
+                                <h4 style="width: 240px;">Ankit Sethia</h4>
+                                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Nemo voluptas veniam, magnam
+                                    ipsum quia debitis aliquid ipsa? Excepturi natus nam optio aspernatur!
+                                </p>
+                            </div>
+                            <div class="flex" style="border-bottom: 1px dashed grey;padding: 6px;">
+                                <input type="checkbox" name="name" id="">
+                                <img src="/img/user.svg" width="24px" alt=""
+                                    style="background-color: aquamarine;margin: 6px 10px;">
+                                <h4 style="width: 240px;">Preeti Kumari</h4>
+                                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Nemo voluptas veniam, magnam
+                                    ipsum quia debitis aliquid ipsa? Excepturi natus nam optio aspernatur!
+                                </p>
+                            </div>
+                            <div class="flex" style="border-bottom: 1px dashed grey;padding: 6px;">
+                                <input type="checkbox" name="name" id="">
+                                <img src="/img/user.svg" width="24px" alt=""
+                                    style="background-color: aquamarine;margin: 6px 10px;">
+                                <h4 style="width: 240px;">Rajeev Ranjan</h4>
+                                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Nemo voluptas veniam, magnam
+                                    ipsum quia debitis aliquid ipsa? Excepturi natus nam optio aspernatur!
+                                </p>
+                            </div>
+                            <div class="flex" style="border-bottom: 1px dashed grey;padding: 6px;">
+                                <input type="checkbox" name="name" id="">
+                                <img src="/img/user.svg" width="24px" alt=""
+                                    style="background-color: aquamarine;margin: 6px 10px;">
+                                <h4 style="width: 240px;">Rajeev Ranjan</h4>
+                                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Nemo voluptas veniam, magnam
+                                    ipsum quia debitis aliquid ipsa? Excepturi natus nam optio aspernatur!
+                                </p>
+                            </div>
+                            <div class="flex" style="border-bottom: 1px dashed grey;padding: 6px;">
+                                <input type="checkbox" name="name" id="">
+                                <img src="/img/user.svg" width="24px" alt=""
+                                    style="background-color: aquamarine;margin: 6px 10px;">
+                                <h4 style="width: 240px;">Rajeev Ranjan</h4>
+                                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Nemo voluptas veniam, magnam
+                                    ipsum quia debitis aliquid ipsa? Excepturi natus nam optio aspernatur!
+                                </p>
+                            </div>
+                            <div class="flex" style="border-bottom: 1px dashed grey;padding: 6px;">
+                                <input type="checkbox" name="name" id="">
+                                <img src="/img/user.svg" width="24px" alt=""
+                                    style="background-color: aquamarine;margin: 6px 10px;">
+                                <h4 style="width: 240px;">Rajeev Ranjan</h4>
+                                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Nemo voluptas veniam, magnam
+                                    ipsum quia debitis aliquid ipsa? Excepturi natus nam optio aspernatur!
+                                </p>
+                            </div>
+                            <div class="flex" style="border-bottom: 1px dashed grey;padding: 6px;">
+                                <input type="checkbox" name="name" id="">
+                                <img src="/img/user.svg" width="24px" alt=""
+                                    style="background-color: aquamarine;margin: 6px 10px;">
+                                <h4 style="width: 240px;">Rajeev Ranjan</h4>
+                                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Nemo voluptas veniam, magnam
+                                    ipsum quia debitis aliquid ipsa? Excepturi natus nam optio aspernatur!
+                                </p>
+                            </div>
+                            <div class="flex" style="border-bottom: 1px dashed grey;padding: 6px;">
+                                <input type="checkbox" name="name" id="">
+                                <img src="/img/user.svg" width="24px" alt=""
+                                    style="background-color: aquamarine;margin: 6px 10px;">
+                                <h4 style="width: 240px;">Rajeev Ranjan</h4>
+                                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Nemo voluptas veniam, magnam
+                                    ipsum quia debitis aliquid ipsa? Excepturi natus nam optio aspernatur!
+                                </p>
+                            </div>
+                            <div class="flex" style="border-bottom: 1px dashed grey;padding: 6px;">
+                                <input type="checkbox" name="name" id="">
+                                <img src="/img/user.svg" width="24px" alt=""
+                                    style="background-color: aquamarine;margin: 6px 10px;">
+                                <h4 style="width: 240px;">Rajeev Ranjan</h4>
+                                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Nemo voluptas veniam, magnam
+                                    ipsum quia debitis aliquid ipsa? Excepturi natus nam optio aspernatur!
+                                </p>
+                            </div>
+                            <div class="flex" style="border-bottom: 1px dashed grey;padding: 6px;">
+                                <input type="checkbox" name="name" id="">
+                                <img src="/img/user.svg" width="24px" alt=""
+                                    style="background-color: aquamarine;margin: 6px 10px;">
+                                <h4 style="width: 240px;">Rajeev Ranjan</h4>
+                                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Nemo voluptas veniam, magnam
+                                    ipsum quia debitis aliquid ipsa? Excepturi natus nam optio aspernatur!
+                                </p>
+                            </div>
+                            <div class="flex" style="border-bottom: 1px dashed grey;padding: 6px;">
+                                <input type="checkbox" name="name" id="">
+                                <img src="/img/user.svg" width="24px" alt=""
+                                    style="background-color: aquamarine;margin: 6px 10px;">
+                                <h4 style="width: 240px;">Rajeev Ranjan</h4>
+                                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Nemo voluptas veniam, magnam
+                                    ipsum quia debitis aliquid ipsa? Excepturi natus nam optio aspernatur!
+                                </p>
+                            </div>
+                            <div class="flex" style="border-bottom: 1px dashed grey;padding: 6px;">
+                                <input type="checkbox" name="name" id="">
+                                <img src="/img/user.svg" width="24px" alt=""
+                                    style="background-color: aquamarine;margin: 6px 10px;">
+                                <h4 style="width: 240px;">Rajeev Ranjan</h4>
+                                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Nemo voluptas veniam, magnam
+                                    ipsum quia debitis aliquid ipsa? Excepturi natus nam optio aspernatur!
+                                </p>
+                            </div>
+                            <div class="flex" style="border-bottom: 1px dashed grey;padding: 6px;">
+                                <input type="checkbox" name="name" id="">
+                                <img src="/img/user.svg" width="24px" alt=""
+                                    style="background-color: aquamarine;margin: 6px 10px;">
+                                <h4 style="width: 240px;">Rajeev Ranjan</h4>
+                                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Nemo voluptas veniam, magnam
+                                    ipsum quia debitis aliquid ipsa? Excepturi natus nam optio aspernatur!
+                                </p>
+                            </div>
+                            <div class="flex" style="border-bottom: 1px dashed grey;padding: 6px;">
+                                <input type="checkbox" name="name" id="">
+                                <img src="/img/user.svg" width="24px" alt=""
+                                    style="background-color: aquamarine;margin: 6px 10px;">
+                                <h4 style="width: 240px;">Rajeev Ranjan</h4>
+                                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Nemo voluptas veniam, magnam
+                                    ipsum quia debitis aliquid ipsa? Excepturi natus nam optio aspernatur!
+                                </p>
+                            </div>
+                            <div class="flex" style="border-bottom: 1px dashed grey;padding: 6px;">
+                                <input type="checkbox" name="name" id="">
+                                <img src="/img/user.svg" width="24px" alt=""
+                                    style="background-color: aquamarine;margin: 6px 10px;">
+                                <h4 style="width: 240px;">Rajeev Ranjan</h4>
+                                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Nemo voluptas veniam, magnam
+                                    ipsum quia debitis aliquid ipsa? Excepturi natus nam optio aspernatur!
+                                </p>
+                            </div>
+                            <div class="flex" style="border-bottom: 1px dashed grey;padding: 6px;">
+                                <input type="checkbox" name="name" id="">
+                                <img src="/img/user.svg" width="24px" alt=""
+                                    style="background-color: aquamarine;margin: 6px 10px;">
+                                <h4 style="width: 240px;">Rajeev Ranjan</h4>
+                                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Nemo voluptas veniam, magnam
+                                    ipsum quia debitis aliquid ipsa? Excepturi natus nam optio aspernatur!
+                                </p>
+                            </div>
+                            <div class="flex" style="border-bottom: 1px dashed grey;padding: 6px;">
+                                <input type="checkbox" name="name" id="">
+                                <img src="/img/user.svg" width="24px" alt=""
+                                    style="background-color: aquamarine;margin: 6px 10px;">
+                                <h4 style="width: 240px;">Rajeev Ranjan</h4>
+                                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Nemo voluptas veniam, magnam
+                                    ipsum quia debitis aliquid ipsa? Excepturi natus nam optio aspernatur!
+                                </p>
+                            </div>
+                            <div class="flex" style="border-bottom: 1px dashed grey;padding: 6px;">
+                                <input type="checkbox" name="name" id="">
+                                <img src="/img/user.svg" width="24px" alt=""
+                                    style="background-color: aquamarine;margin: 6px 10px;">
+                                <h4 style="width: 240px;">Rajeev Ranjan</h4>
+                                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Nemo voluptas veniam, magnam
+                                    ipsum quia debitis aliquid ipsa? Excepturi natus nam optio aspernatur!
+                                </p>
+                            </div>
+                            <div class="flex" style="border-bottom: 1px dashed grey;padding: 6px;">
+                                <input type="checkbox" name="name" id="">
+                                <img src="/img/user.svg" width="24px" alt=""
+                                    style="background-color: aquamarine;margin: 6px 10px;">
+                                <h4 style="width: 240px;">Rajeev Ranjan</h4>
+                                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Nemo voluptas veniam, magnam
+                                    ipsum quia debitis aliquid ipsa? Excepturi natus nam optio aspernatur!
+                                </p>
+                            </div>
+                            <div class="flex" style="border-bottom: 1px dashed grey;padding: 6px;">
+                                <input type="checkbox" name="name" id="">
+                                <img src="/img/user.svg" width="24px" alt=""
+                                    style="background-color: aquamarine;margin: 6px 10px;">
+                                <h4 style="width: 240px;">Rajeev Ranjan</h4>
+                                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Nemo voluptas veniam, magnam
+                                    ipsum quia debitis aliquid ipsa? Excepturi natus nam optio aspernatur!
+                                </p>
+                            </div>
+                            <div class="flex" style="border-bottom: 1px dashed grey;padding: 6px;">
+                                <input type="checkbox" name="name" id="">
+                                <img src="/img/user.svg" width="24px" alt=""
+                                    style="background-color: aquamarine;margin: 6px 10px;">
+                                <h4 style="width: 240px;">Rajeev Ranjan</h4>
+                                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Nemo voluptas veniam, magnam
+                                    ipsum quia debitis aliquid ipsa? Excepturi natus nam optio aspernatur!
+                                </p>
+                            </div>
+                            <div class="flex" style="border-bottom: 1px dashed grey;padding: 6px;">
+                                <input type="checkbox" name="name" id="">
+                                <img src="/img/user.svg" width="24px" alt=""
+                                    style="background-color: aquamarine;margin: 6px 10px;">
+                                <h4 style="width: 240px;">Rajeev Ranjan</h4>
+                                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Nemo voluptas veniam, magnam
+                                    ipsum quia debitis aliquid ipsa? Excepturi natus nam optio aspernatur!
+                                </p>
+                            </div>
+                        </div>
+                        <div></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Retrieve the collapsed state from localStorage on page load
+        document.addEventListener('DOMContentLoaded', function () {
+            var isSidebarCollapsed = localStorage.getItem('isSidebarCollapsed');
+            var sidebar = document.getElementById('sidebar');
+
+            if (isSidebarCollapsed === 'true') {
+                sidebar.classList.add('collapsed');
+                logoelement.classList.toggle('hidden')
+                navitem.forEach(element => {
+                    element.classList.toggle('hidden')
+                });
+            }
+
+        });
+
+        const sidebarcontent = document.getElementsByClassName('sidebar')[0]
+        const navitem = sidebarcontent.querySelectorAll('span')
+        const maincontent = document.querySelector('.main-content')
+        const messagebody = maincontent.querySelector('.mail-content')
+
+        let logoelement = document.querySelector('.sidebar')
+        logoelement = logoelement.querySelector('.logo')
+
+        function hideContent(navitem) {
+
+        }
+
+        document.getElementById('toggle-sidebar-btn').addEventListener('click', function () {
+            var sidebar = document.getElementById('sidebar');
+            sidebar.classList.toggle('collapsed');
+            logoelement.classList.toggle('hidden')
+            navitem.forEach(element => {
+                element.classList.toggle('hidden')
+            });
+
+            // Store the collapsed state in localStorage
+            var isCollapsed = sidebar.classList.contains('collapsed');
+            localStorage.setItem('isSidebarCollapsed', isCollapsed);
+
+        });
+
+        var sidebar = document.getElementById('sidebar');
+        sidebar.style.height = window.innerHeight + 'px'
+        messagebody.style.maxHeight = (window.innerHeight - 148) + 'px'
+        // Update collapsed state on window resize
+        window.addEventListener('resize', function () {
+            var viewportWidth = window.innerWidth || document.documentElement.clientWidth;
+            sidebar.style.height = window.innerHeight + 'px'
+            messagebody.style.maxHeight = (window.innerHeight - 148) + 'px'
+
+            if (viewportWidth <= 768) {
+                sidebar.classList.add('collapsed');
+                logoelement.classList.add('hidden')
+                navitem.forEach(element => {
+                    element.classList.add('hidden')
+                });
+            } else {
+                sidebar.classList.remove('collapsed');
+                logoelement.classList.remove('hidden')
+                navitem.forEach(element => {
+                    element.classList.remove('hidden')
+                });
+            }
+        });
+
+
+        console.log(window.innerHeight);
+    </script>
+
+</body>
+
+</html>
