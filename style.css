@@ -1,0 +1,299 @@
+* {
+    margin: 0;
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    color: #313131;
+}
+
+
+.sidebar {
+    width: 256px;
+    height: 100%;
+    /* transition: width 0.1s ease; */
+    background-color: #ececec;
+    color: #fff;
+    box-sizing: border-box;
+    position: relative;
+    height: 100%;
+
+    .header {
+      padding: 12px 16px;
+      border-bottom: 1px solid #fff;
+
+      h1 {
+        font-weight: lighter;
+        color: #313131;
+      }
+    }
+  }
+
+
+
+  .sidebar.collapsed {
+    width: 78px;
+  }
+
+  #toggle-sidebar-btn {
+    cursor: pointer;
+    background-color: #555;
+    color: #fff;
+    border: none;
+    padding: 8px;
+    border-radius: 50%;
+    height: 40px;
+    width: 40px;
+    font-size: 18px;
+  }
+  .sidebar.collapsed #toggle-sidebar-btn {
+    transform: rotate(180deg);
+  }
+
+  .sidebar-content {
+    color: #313131;
+    padding: 12px 16px;
+    display: flex;
+    justify-content: flex-start;
+    width: 100%;
+
+    ul {
+      list-style: none;
+
+      li {
+        padding: 10px 18px;
+        font-size: 20px;
+        display: flex;
+        justify-content: flex-start;
+
+        a {
+          text-decoration: none;
+          color: #313131;
+          display: flex;
+          letter-spacing: 0.75px;
+
+          img {
+            width: 20px;
+            padding-left: 0px;
+          }
+        }
+
+        span {
+          padding-left: 16px;
+        }
+      }
+    }
+  }
+
+  .sidebar-content ul li:first-child {
+    background-color: #ffffff;
+    padding: 16px 18px;
+    border-radius: 36px;
+    font-size: 22px;
+    margin-bottom: 8px;
+
+    padding img {
+      width: 24px;
+    }
+
+    span {
+      padding-right: 20px;
+    }
+  }
+
+  .sidebar-footer {
+    border-top: 1px solid grey;
+    width: 100%;
+    position: absolute;
+    bottom: 0;
+    padding: 16px 34px;
+
+    a {
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      text-decoration: none;
+      font-size: 22px;
+      color: #313131;
+
+      img {
+        width: 24px;
+      }
+    }
+
+    span {
+      padding-left: 16px;
+    }
+  }
+
+
+      /* Track */
+      ::-webkit-scrollbar {
+        width: 4px;
+        /* width of the entire scrollbar */
+      }
+
+      /* Handle */
+      ::-webkit-scrollbar-thumb {
+        background-color: #888;
+        /* color of the scrollbar handle */
+        border-radius: 6px;
+        /* roundness of the scrollbar handle */
+      }
+
+      /* Handle on hover */
+      ::-webkit-scrollbar-thumb:hover {
+        background-color: #555;
+        /* color of the scrollbar handle on hover */
+      }
+
+      /* Track */
+      ::-webkit-scrollbar-track {
+        background: #f1f1f1;
+        /* color of the scrollbar track */
+      }
+
+      /* Handle */
+      ::-webkit-scrollbar-track-piece {
+        background: #ddd;
+        /* color of the scrollbar handle track piece */
+      }
+
+      .main-container {
+        margin: 8px;
+      }
+
+      .main-content {
+        width: 100%;
+
+        .top-header {
+          height: 64px;
+          background-color: #ececec;
+
+          h2,
+          .flex {
+            padding: 0 22px;
+          }
+        }
+
+        .container {
+          border-radius: 12px;
+          background-color: #fff;
+
+          .header {
+            border-radius: 24px;
+            height: 36px;
+            background-color: #ececec;
+
+            h5 {
+              letter-spacing: 0.75px;
+              color: #888;
+            }
+          }
+
+          .body {
+            margin-top: 8px;
+            padding: 12px;
+            border-radius: 12px;
+            background-color: #ececec;
+
+            .mail-content {
+              padding: 6px;
+              overflow-y: scroll;
+            }
+          }
+        }
+      }
+
+      .mail-element{
+        border-bottom: 1px dashed grey;
+        padding: 8px 0;
+        display: flex;
+        align-items: center;
+        .left-side{
+            display: flex;
+            align-items: center;
+            input{
+            }
+            .image-box{
+                width: 36px;
+                height: 36px;
+                padding: 6px;
+                border-radius: 28px;
+                margin: 0 16px;
+                img{
+                    width: 100%;
+                    height: 100%;
+                }
+            }
+        }
+        .right-side{
+            display: flex;
+            align-items: center;
+            h4{
+                width: 220px;
+            }
+            .message-text{
+                display: flex;
+                flex-wrap: nowrap;
+                justify-content: flex-end;
+            }
+        }
+      }
+      
+      .dashboard-container {
+        display: flex;
+      }
+
+
+      .logo {
+        padding-left: 16px;
+        margin: 0;
+      }
+
+      .hidden {
+        display: none;
+      }
+      
+      @media only screen and (max-width: 768px) {
+        .sidebar-content {
+          justify-content: center !important;
+
+          ul li {
+            padding: 16px 20px 16px 18px !important;
+            transition: 0.1s ease-in-out;
+          }
+        }
+
+        .sidebar-footer a {
+          justify-content: center !important;
+        }
+
+        .mail-element{
+                align-items: flex-start;
+                font-size: 14px;
+                padding: px 0;
+
+            .right-side{
+                flex-direction: column;
+                justify-content: flex-start;
+                flex-wrap: wrap-reverse;
+                h4{
+                    float: left;
+                    width: 100% !important;
+                }
+                .message-text{
+                    flex-wrap: wrap-reverse;
+                    .mail-text{
+                        height: 32px !important;
+                    }
+                    .message-time{
+                        margin-top: -18px;
+                        display: flex;
+                        justify-content: flex-end;
+                        padding-right: 4px;
+                    }
+                }
+            }
+        }
+      }
